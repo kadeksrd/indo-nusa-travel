@@ -2,8 +2,9 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { XCircle, RefreshCw, Home, MessageCircle } from "lucide-react";
+import { Suspense } from "react";
 
-export default function PembayaranGagalPage() {
+function PembayaranGagalContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id");
   const wa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "6281234567890";
@@ -55,5 +56,19 @@ export default function PembayaranGagalPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PembayaranGagalPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-700"></div>
+        </div>
+      }
+    >
+      <PembayaranGagalContent />
+    </Suspense>
   );
 }

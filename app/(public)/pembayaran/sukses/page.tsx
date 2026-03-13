@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
@@ -12,7 +12,7 @@ import {
   Check,
 } from "lucide-react";
 
-export default function PembayaranSuksesPage() {
+function PembayaranSuksesContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id");
   const status = searchParams.get("status");
@@ -211,5 +211,19 @@ export default function PembayaranSuksesPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PembayaranSuksesPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-700"></div>
+        </div>
+      }
+    >
+      <PembayaranSuksesContent />
+    </Suspense>
   );
 }
