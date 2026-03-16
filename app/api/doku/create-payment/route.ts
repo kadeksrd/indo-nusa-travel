@@ -29,7 +29,8 @@ export async function POST(req: NextRequest) {
   const clientId = process.env.DOKU_CLIENT_ID!;
   const secretKey = process.env.DOKU_SECRET_KEY!;
   const baseUrl = getDokuBaseUrl();
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL || `https://${process.env.VERCEL_URL}`;
 
   const requestId = generateRequestId();
   const requestTimestamp = generateTimestamp();
