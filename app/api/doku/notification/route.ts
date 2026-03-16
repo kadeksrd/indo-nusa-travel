@@ -7,9 +7,9 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
-export async function GET() {
-  return new Response("OK", { status: 200 });
-}
+// export async function GET() {
+//   return new Response("OK", { status: 200 });
+// }
 
 export async function POST(req: NextRequest) {
   try {
