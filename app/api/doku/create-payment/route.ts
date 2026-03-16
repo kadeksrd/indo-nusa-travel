@@ -8,6 +8,10 @@ import {
   generateTimestamp,
 } from "@/lib/doku";
 
+export async function GET() {
+  return new Response("OK", { status: 200 });
+}
+
 export async function POST(req: NextRequest) {
   const supabase = createRouteHandlerClient({ cookies });
   const { kode_pemesanan } = await req.json();
