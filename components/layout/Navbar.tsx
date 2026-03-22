@@ -84,17 +84,17 @@ export default function Navbar({ settings }: { settings?: Record<string, string>
                     {" " + (settings?.nama_website || process.env.NEXT_PUBLIC_APP_NAME || "INDO NUSA TRAVEL").split(" ").slice(1).join(" ")}
                  </span>
                </span>
-               <span className={`text-[8px] font-black uppercase tracking-[0.3em] transition-colors duration-500 ${isTransparent ? "text-white/60" : "text-gray-400"}`}>Premium Travel Partner</span>
+               <span className={`text-[9px] font-bold uppercase tracking-[0.2em] transition-colors duration-500 ${isTransparent ? "text-white/60" : "text-gray-400"}`}>Premium Travel Partner</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-12">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-500 relative group ${
+                className={`text-[12px] font-bold uppercase tracking-widest transition-all duration-500 relative group ${
                   isTransparent
                     ? "text-white/80 hover:text-white"
                     : pathname === link.href
@@ -103,7 +103,7 @@ export default function Navbar({ settings }: { settings?: Record<string, string>
                 }`}
               >
                 {link.label}
-                <span className={`absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-1 rounded-full transition-all duration-500 group-hover:w-full ${
+                <span className={`absolute -bottom-2 left-0 w-0 h-0.5 rounded-full transition-all duration-500 group-hover:w-full ${
                    isTransparent ? "bg-yellow-400" : "bg-blue-700"
                 }`} />
               </Link>
@@ -145,10 +145,10 @@ export default function Navbar({ settings }: { settings?: Record<string, string>
                 )}
               </div>
             ) : (
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-8">
                 <Link
                   href="/masuk"
-                  className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 ${
+                  className={`text-[12px] font-bold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 ${
                     isTransparent ? "text-white hover:text-yellow-400" : "text-gray-900 hover:text-blue-700"
                   }`}
                 >
@@ -156,7 +156,7 @@ export default function Navbar({ settings }: { settings?: Record<string, string>
                 </Link>
                 <Link
                   href="/daftar"
-                  className={`px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-2xl hover:-translate-y-1 active:scale-95 ${
+                  className={`px-8 py-4 rounded-2xl text-[12px] font-bold uppercase tracking-widest transition-all duration-500 shadow-2xl hover:shadow-xl hover:-translate-y-0.5 active:scale-95 ${
                     isTransparent 
                       ? "bg-white text-blue-700 hover:bg-blue-50 shadow-white/10" 
                       : "bg-blue-700 text-white hover:bg-blue-800 shadow-blue-700/20"

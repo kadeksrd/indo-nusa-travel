@@ -3,6 +3,13 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const supabase = createClient();
@@ -35,7 +42,7 @@ export default async function RootLayout({
   const gaId = getS("pixel_analytics");
 
   return (
-    <html lang="id">
+    <html lang="id" className={`${poppins.variable}`}>
       <head>
         {/* Google Analytics (GA4) */}
         {gaId && (
@@ -115,7 +122,7 @@ export default async function RootLayout({
           />
         )}
       </head>
-      <body>
+      <body className={poppins.className}>
         {/* GTM Noscript */}
         {gtmId && (
           <noscript>
