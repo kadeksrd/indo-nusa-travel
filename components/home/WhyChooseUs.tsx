@@ -33,30 +33,37 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-16 px-4 max-w-7xl mx-auto">
-      <div className="text-center mb-10">
-        <h2 className="text-2xl font-bold text-gray-900">
-          Mengapa Pilih Kami?
-        </h2>
-        <p className="text-gray-500 mt-2">
-          Kami berkomitmen memberikan pengalaman perjalanan terbaik
-        </p>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {features.map((f) => (
-          <div
-            key={f.title}
-            className="text-center p-6 rounded-2xl border hover:shadow-md transition"
-          >
+    <section className="px-4 max-w-7xl mx-auto">
+      <div className="bg-white rounded-[2rem] md:rounded-[3rem] shadow-xl border border-gray-100 p-8 md:p-12 lg:p-16">
+        <div className="text-center mb-10 md:mb-16">
+          <span className="text-blue-600 font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] mb-3 block">Keunggulan Kami</span>
+          <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight px-4">
+            Mengapa Pilih Kami?
+          </h2>
+          <div className="w-16 h-1 bg-blue-700 mx-auto rounded-full" />
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+          {features.map((f, i) => (
             <div
-              className={`w-14 h-14 ${f.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}
+              key={f.title}
+              className="group relative"
             >
-              <f.icon className={`w-7 h-7 ${f.color}`} />
+              <div
+                className={`w-16 h-16 ${f.bg} rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}
+              >
+                <f.icon className={`w-8 h-8 ${f.color}`} />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">{f.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed font-medium">{f.desc}</p>
+              
+              {/* Animated number background */}
+              <span className="absolute top-0 right-0 text-7xl font-black text-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -translate-y-4">
+                0{i + 1}
+              </span>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-1">{f.title}</h3>
-            <p className="text-sm text-gray-500">{f.desc}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

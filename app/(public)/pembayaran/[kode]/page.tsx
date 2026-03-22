@@ -70,7 +70,7 @@ export default function PembayaranPage({
     pemesanan.paket_wisata?.nama || pemesanan.rental_mobil?.nama;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4">
       <div className="max-w-lg mx-auto">
         {/* Header */}
         <div className="text-center mb-8">

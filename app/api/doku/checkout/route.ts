@@ -10,7 +10,7 @@ import {
 
 // Biar gak 405 kalau diakses lewat browser/GET
 export async function GET() {
-  return NextResponse.json({ message: "API Checkout Indo Nusa Travel Aktif" });
+  return NextResponse.json({ message: `API Checkout ${process.env.NEXT_PUBLIC_APP_NAME || "Indo Nusa Travel"} Aktif` });
 }
 
 export async function POST(req: NextRequest) {

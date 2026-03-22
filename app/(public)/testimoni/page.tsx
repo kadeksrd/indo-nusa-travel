@@ -18,24 +18,27 @@ export default async function TestimoniPage() {
   return (
     <div>
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-800 to-blue-500 py-16 text-center text-white">
-        <h1 className="text-3xl font-bold">Testimoni Pelanggan</h1>
-        <p className="mt-2 text-blue-200">
-          Kepercayaan Anda adalah prioritas utama kami
-        </p>
-        <div className="mt-6 flex items-center justify-center gap-2">
-          <div className="flex gap-1">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className="w-6 h-6 fill-yellow-400 text-yellow-400"
-              />
-            ))}
+      <div className="relative h-80 md:h-[400px] bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 flex items-center justify-center pt-20 overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
+        <div className="relative text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Testimoni Pelanggan</h1>
+          <p className="max-w-xl mx-auto text-blue-100 font-medium text-sm md:text-base mb-6">
+            Kepercayaan Anda adalah prioritas utama kami. Lihat apa yang mereka katakan tentang perjalanan bersama kami.
+          </p>
+          <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-2 w-fit mx-auto border border-white/20">
+            <div className="flex gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className="w-5 h-5 fill-yellow-400 text-yellow-400"
+                />
+              ))}
+            </div>
+            <span className="text-xl font-black">{avgRating}</span>
+            <span className="text-blue-100 text-xs font-bold uppercase tracking-wider">
+              / {testimonis?.length} Ulasan
+            </span>
           </div>
-          <span className="text-2xl font-bold">{avgRating}</span>
-          <span className="text-blue-200 text-sm">
-            dari {testimonis?.length} ulasan
-          </span>
         </div>
       </div>
 

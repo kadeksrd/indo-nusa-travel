@@ -2,19 +2,45 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import toast from "react-hot-toast";
-import { Save } from "lucide-react";
+import { Save, Globe, Phone, Share2, Image as ImageIcon, BarChart3, Info } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
 
-const settingFields = [
-  { kunci: "nama_website", label: "Nama Website" },
-  { kunci: "tagline", label: "Tagline" },
-  { kunci: "telepon", label: "Telepon" },
-  { kunci: "email", label: "Email" },
-  { kunci: "alamat", label: "Alamat" },
-  { kunci: "whatsapp", label: "Nomor WhatsApp (tanpa +)" },
-  { kunci: "instagram", label: "Username Instagram" },
-  { kunci: "facebook", label: "Username Facebook" },
-  { kunci: "hero_judul", label: "Hero Judul" },
-  { kunci: "hero_subjudul", label: "Hero Sub Judul" },
+const CATEGORIES = [
+  {
+    id: "umum",
+    label: "Informasi Umum",
+    icon: Globe,
+    fields: [
+      { kunci: "nama_website", label: "Nama Website", placeholder: process.env.NEXT_PUBLIC_APP_NAME || "Indo Nusa Travel" },
+      { kunci: "tagline", label: "Tagline", placeholder: "Solusi Liburan Terpercaya" },
+    ],
+  },
+  {
+    id: "kontak",
+    label: "Kontak & Media Sosial",
+    icon: Phone,
+    fields: [
+      { kunci: "telepon", label: "Telepon" },
+      { kunci: "email", label: "Email" },
+      { kunci: "alamat", label: "Alamat" },
+      { kunci: "whatsapp", label: "WhatsApp (tanpa +)", placeholder: "6281234..." },
+      { kunci: "instagram", label: "Username Instagram" },
+      { kunci: "facebook", label: "Username Facebook" },
+      { kunci: "maps_link", label: "Google Maps Embed Link", placeholder: "https://www.google.com/maps/embed?pb=..." },
+    ],
+  },
+  {
+    id: "hero",
+    label: "Tampilan Beranda (Hero)",
+    icon: ImageIcon,
+    fields: [
+      { kunci: "hero_judul", label: "Judul Utama Hero" },
+      { kunci: "hero_subjudul", label: "Sub-judul Hero" },
+      { kunci: "hero_image_home", label: "URL Background Hero Beranda", placeholder: "https://images.unsplash.com/..." },
+      { kunci: "hero_image_paket", label: "URL Background Hero Paket Wisata", placeholder: "https://images.unsplash.com/..." },
+      { kunci: "hero_image_rental", label: "URL Background Hero Rental Mobil", placeholder: "https://images.unsplash.com/..." },
+    ],
+  },
 ];
 
 export default function PengaturanPage() {
@@ -63,23 +89,62 @@ export default function PengaturanPage() {
         </button>
       </div>
 
-      <div className="bg-white rounded-xl border p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {settingFields.map((f) => (
-            <div key={f.kunci}>
-              <label className="text-sm font-medium text-gray-700">
-                {f.label}
-              </label>
-              <input
-                value={settings[f.kunci] || ""}
-                onChange={(e) =>
-                  setSettings({ ...settings, [f.kunci]: e.target.value })
-                }
-                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+      <div className="space-y-6 pb-12">
+        {CATEGORIES.map((cat) => (
+          <div key={cat.id} className="bg-white rounded-xl border shadow-sm">
+            <div className="px-6 py-4 border-b flex items-center gap-2 bg-gray-50/50 rounded-t-xl">
+              <cat.icon className="w-5 h-5 text-blue-600" />
+              <h2 className="font-bold text-gray-900">{cat.label}</h2>
             </div>
-          ))}
-        </div>
+            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+              {cat.fields.map((f: any) => {
+                const isImage = f.kunci.includes("image") || f.kunci.includes("logo");
+                const recommendedSize = f.kunci.includes("hero") ? "1920x1080 px" : f.kunci.includes("logo") ? "200x50 px" : "";
+
+                return (
+                  <div key={f.kunci} className={`${f.description || isImage ? "md:col-span-2" : ""} ${f.description ? "bg-blue-50/30 p-4 rounded-xl border border-blue-100/50" : ""}`}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-sm font-bold text-gray-700 block">
+                        {f.label}
+                      </label>
+                      {recommendedSize && (
+                        <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <Info className="w-3 h-3" /> {recommendedSize}
+                        </span>
+                      )}
+                    </div>
+
+                    {isImage ? (
+                      <div className="mt-1">
+                        <ImageUpload
+                          value={settings[f.kunci] || ""}
+                          onChange={(url) => setSettings({ ...settings, [f.kunci]: url })}
+                          folder="settings"
+                        />
+                      </div>
+                    ) : (
+                      <input
+                        value={settings[f.kunci] || ""}
+                        onChange={(e) =>
+                          setSettings({ ...settings, [f.kunci]: e.target.value })
+                        }
+                        placeholder={f.placeholder}
+                        className="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+                      />
+                    )}
+                    
+                    {f.description && (
+                      <p className="mt-2 text-xs text-blue-600 font-medium flex items-start gap-1.5">
+                        <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                        {f.description}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

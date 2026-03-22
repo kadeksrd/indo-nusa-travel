@@ -46,7 +46,7 @@ export default function MasukPage() {
               <Plane className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-blue-700 text-xl">
-              Nusa Bali Travel
+              {process.env.NEXT_PUBLIC_APP_NAME || "Indo Nusa Travel"}
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Masuk</h1>

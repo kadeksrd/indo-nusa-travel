@@ -20,6 +20,11 @@ export default function BuatPaketPage() {
     aktif: true,
     fasilitas: "",
     konten: "",
+    meta_title: "",
+    meta_description: "",
+    meta_keywords: "",
+    slot_total: 0,
+    slot_tersedia: 0,
   });
   const [wilayahs, setWilayahs] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -55,6 +60,11 @@ export default function BuatPaketPage() {
       fasilitas,
       populer: form.populer,
       aktif: form.aktif,
+      meta_title: form.meta_title || null,
+      meta_description: form.meta_description || null,
+      meta_keywords: form.meta_keywords || null,
+      slot_total: form.slot_total,
+      slot_tersedia: form.slot_tersedia || form.slot_total,
     });
 
     if (error) toast.error("Gagal menyimpan: " + error.message);
@@ -123,6 +133,38 @@ export default function BuatPaketPage() {
               />
             </div>
           </div>
+
+          <div className="bg-white rounded-xl border p-5 space-y-4">
+            <h2 className="font-semibold text-gray-900">SEO (Optimasi Mesin Pencari)</h2>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Title</label>
+              <input
+                value={form.meta_title}
+                onChange={(e) => setForm({ ...form, meta_title: e.target.value })}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Judul untuk SEO..."
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Description</label>
+              <textarea
+                value={form.meta_description}
+                onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+                rows={3}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                placeholder="Deskripsi singkat untuk hasil pencarian Google..."
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Keywords</label>
+              <input
+                value={form.meta_keywords}
+                onChange={(e) => setForm({ ...form, meta_keywords: e.target.value })}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="wisata bali, paket tour, nusa penida"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="space-y-5">
@@ -169,6 +211,26 @@ export default function BuatPaketPage() {
                 onChange={(e) => setForm({ ...form, harga_coret: e.target.value })}
                 className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="2000000"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Total Slot</label>
+              <input
+                type="number"
+                value={form.slot_total}
+                onChange={(e) => setForm({ ...form, slot_total: parseInt(e.target.value) || 0, slot_tersedia: parseInt(e.target.value) || 0 })}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="10"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Slot Tersedia</label>
+              <input
+                type="number"
+                value={form.slot_tersedia}
+                onChange={(e) => setForm({ ...form, slot_tersedia: parseInt(e.target.value) || 0 })}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="10"
               />
             </div>
 

@@ -2,15 +2,28 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { XCircle, RefreshCw, Home, MessageCircle } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 function PembayaranGagalContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id");
-  const wa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "6281234567890";
+  const [waNumber, setWaNumber] = useState("6281234567890");
+  const supabase = createClient();
+
+  useEffect(() => {
+    supabase
+      .from("pengaturan_website")
+      .select("nilai")
+      .eq("kunci", "whatsapp")
+      .single()
+      .then(({ data }: { data: any }) => {
+        if (data?.nilai) setWaNumber(data.nilai);
+      });
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 pt-24 pb-12">
       <div className="max-w-md w-full text-center">
         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <XCircle className="w-10 h-10 text-red-600" />
@@ -41,7 +54,7 @@ function PembayaranGagalContent() {
           )}
 
           <a
-            href={`https://wa.me/${wa}?text=${encodeURIComponent(`Halo, saya mengalami masalah pembayaran.\nKode Booking: ${orderId}\nMohon bantu. Terima kasih!`)}`}
+            href={`https://wa.me/${waNumber}?text=${encodeURIComponent(`Halo, saya mengalami masalah pembayaran.\nKode Booking: ${orderId}\nMohon bantu. Terima kasih!`)}`}
             target="_blank"
             className="w-full bg-green-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-green-600 transition"
           >

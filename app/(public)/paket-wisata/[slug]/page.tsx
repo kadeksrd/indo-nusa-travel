@@ -1,9 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
+import { getPaketMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  return await getPaketMetadata(params.slug);
+}
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Clock, Star, Users, Check } from "lucide-react";
 import BookingButton from "@/components/paket/BookingButton";
+import SlotBadge from "@/components/shared/SlotBadge";
 
 interface Props {
   params: { slug: string };
@@ -23,7 +29,7 @@ export default async function PaketDetailPage({ params }: Props) {
   const formatHarga = (h: number) => "Rp " + h.toLocaleString("id-ID");
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 pt-24 pb-12">
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-4">
         <Link href="/" className="hover:text-blue-600">Home</Link>
@@ -135,10 +141,15 @@ export default async function PaketDetailPage({ params }: Props) {
                 <MapPin className="w-4 h-4 text-red-500 flex-shrink-0" />
                 Wilayah: {paket.wilayah?.nama}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Users className="w-4 h-4 text-green-500 flex-shrink-0" />
                 Min. 2 orang
               </div>
+              {paket.slot_total > 0 && (
+                <div className="flex items-center gap-2 mt-1">
+                  <SlotBadge tersedia={paket.slot_tersedia} total={paket.slot_total} />
+                </div>
+              )}
             </div>
 
             {/* Client Component - Booking Button + Modal */}

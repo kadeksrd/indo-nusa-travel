@@ -33,6 +33,8 @@ export interface PaketWisata {
   aktif: boolean;
   rating: number;
   total_ulasan: number;
+  slot_total: number;
+  slot_tersedia: number;
   created_at: string;
 }
 
@@ -63,6 +65,8 @@ export interface RentalMobil {
   fitur: string[];
   terfavorit: boolean;
   aktif: boolean;
+  stok_total: number;
+  stok_tersedia: number;
   created_at: string;
 }
 

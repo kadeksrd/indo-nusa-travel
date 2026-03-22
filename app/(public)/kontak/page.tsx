@@ -61,11 +61,14 @@ export default function KontakPage() {
   return (
     <div>
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-800 to-blue-500 py-16 text-center text-white">
-        <h1 className="text-3xl font-bold">Hubungi Kami</h1>
-        <p className="mt-2 text-blue-200">
-          Kami siap membantu perjalanan wisata Anda
-        </p>
+      <div className="relative h-80 md:h-[350px] bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 flex items-center justify-center pt-20 overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
+        <div className="relative text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Hubungi Kami</h1>
+          <p className="max-w-xl mx-auto text-blue-100 font-medium text-sm md:text-base">
+            Kami siap membantu merencanakan perjalanan impian Anda. Jangan ragu untuk menghubungi tim profesional kami.
+          </p>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-12">

@@ -19,6 +19,11 @@ export default function BuatMobilPage() {
     terfavorit: false,
     aktif: true,
     fitur: "",
+    meta_title: "",
+    meta_description: "",
+    meta_keywords: "",
+    stok_total: 1,
+    stok_tersedia: 1,
   });
   const [kategoris, setKategoris] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -50,6 +55,11 @@ export default function BuatMobilPage() {
       fitur,
       terfavorit: form.terfavorit,
       aktif: form.aktif,
+      meta_title: form.meta_title || null,
+      meta_description: form.meta_description || null,
+      meta_keywords: form.meta_keywords || null,
+      stok_total: form.stok_total || 1,
+      stok_tersedia: form.stok_tersedia !== undefined ? form.stok_tersedia : (form.stok_total || 1),
     });
 
     if (error) toast.error("Gagal: " + error.message);
@@ -104,6 +114,38 @@ export default function BuatMobilPage() {
               />
             </div>
           </div>
+
+          <div className="bg-white rounded-xl border p-5 space-y-4">
+            <h2 className="font-semibold text-gray-900">SEO (Optimasi Mesin Pencari)</h2>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Title</label>
+              <input
+                value={form.meta_title}
+                onChange={(e) => setForm({ ...form, meta_title: e.target.value })}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Judul untuk SEO..."
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Description</label>
+              <textarea
+                value={form.meta_description}
+                onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+                rows={3}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                placeholder="Deskripsi singkat untuk hasil pencarian Google..."
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Keywords</label>
+              <input
+                value={form.meta_keywords}
+                onChange={(e) => setForm({ ...form, meta_keywords: e.target.value })}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="rental mobil bali, sewa mobil murah"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="space-y-5">
@@ -152,6 +194,27 @@ export default function BuatMobilPage() {
                 className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="350000"
               />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium text-gray-700">Total Stok</label>
+                <input
+                  type="number" min={1}
+                  value={form.stok_total}
+                  onChange={(e) => setForm({ ...form, stok_total: parseInt(e.target.value) })}
+                  className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700">Stok Tersedia</label>
+                <input
+                  type="number" min={0}
+                  value={form.stok_tersedia}
+                  onChange={(e) => setForm({ ...form, stok_tersedia: parseInt(e.target.value) })}
+                  className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
             </div>
 
             {/* IMAGE UPLOAD */}

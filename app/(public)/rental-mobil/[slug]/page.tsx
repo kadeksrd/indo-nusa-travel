@@ -1,9 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
+import { getMobilMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  return await getMobilMetadata(params.slug);
+}
 import Image from "next/image";
 import Link from "next/link";
-import { Users, Settings, Check } from "lucide-react";
+import { Users, Settings, Check, Car } from "lucide-react";
 import RentalBookingButton from "@/components/rental/RentalBookingButton";
+import SlotBadge from "@/components/shared/SlotBadge";
 
 interface Props {
   params: { slug: string };
@@ -23,7 +29,7 @@ export default async function RentalMobilDetailPage({ params }: Props) {
   const formatHarga = (h: number) => "Rp " + h.toLocaleString("id-ID");
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 pt-24 pb-12">
       <nav className="text-sm text-gray-500 mb-4 flex items-center gap-1">
         <Link href="/" className="hover:text-blue-600">Home</Link>
         <span>›</span>
@@ -132,6 +138,11 @@ export default async function RentalMobilDetailPage({ params }: Props) {
                 <Settings className="w-4 h-4 text-gray-500 flex-shrink-0" />
                 Transmisi: {mobil.transmisi}
               </div>
+              {mobil.stok_total > 0 && (
+                <div className="mt-1">
+                  <SlotBadge tersedia={mobil.stok_tersedia} total={mobil.stok_total} variant="simpel" />
+                </div>
+              )}
             </div>
 
             <RentalBookingButton mobil={mobil} />

@@ -1,7 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
+import { getPageMetadata } from "@/lib/seo";
 import MobilCard from "@/components/rental/MobilCard";
 import Link from "next/link";
 import { Search } from "lucide-react";
+
+export async function generateMetadata() {
+  return await getPageMetadata("/rental-mobil");
+}
 
 interface Props {
   searchParams: { q?: string; transmisi?: string };
@@ -9,13 +14,18 @@ interface Props {
 
 export default async function RentalMobilPage({ searchParams }: Props) {
   const supabase = createClient();
-  const [{ data: kategoris }, { data: mobils }] = await Promise.all([
+  const [{ data: kategoris }, { data: mobils }, { data: settingsData }] = await Promise.all([
     supabase.from("kategori_mobil").select("*").order("nama"),
     supabase
       .from("rental_mobil")
       .select("*, kategori_mobil(*)")
       .eq("aktif", true),
+    supabase.from("pengaturan_website").select("*"),
   ]);
+
+  const settings: Record<string, string> = {};
+  settingsData?.forEach((s) => (settings[s.kunci] = s.nilai));
+  const heroImage = settings.hero_image_rental || "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1600";
 
   let filtered = mobils || [];
   if (searchParams.q)
@@ -37,19 +47,17 @@ export default async function RentalMobilPage({ searchParams }: Props) {
 
   return (
     <div>
-      {/* Hero */}
       <div
-        className="relative h-56 bg-cover bg-center flex items-center justify-center"
+        className="relative h-80 md:h-[400px] bg-cover bg-center flex items-center justify-center pt-20"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1600')",
+          backgroundImage: `url('${heroImage}')`,
         }}
       >
-        <div className="absolute inset-0 bg-blue-900/60" />
-        <div className="relative text-center text-white">
-          <h1 className="text-3xl font-bold">Rental Mobil</h1>
-          <p className="mt-2 text-blue-200">
-            Armada lengkap untuk perjalanan nyaman dan aman
+        <div className="absolute inset-0 bg-blue-900/70 backdrop-blur-[2px]" />
+        <div className="relative text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Rental Mobil</h1>
+          <p className="max-w-xl mx-auto text-blue-100 font-medium text-sm md:text-base">
+            Armada lengkap terawat untuk perjalanan nyaman dan aman selama Anda berlibur di Pulau Bali.
           </p>
         </div>
       </div>

@@ -1,10 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
+import { getBlogMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
 import { Clock, User, Tag } from "lucide-react";
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  return await getBlogMetadata(params.slug);
+}
 
 interface Props {
   params: { slug: string };

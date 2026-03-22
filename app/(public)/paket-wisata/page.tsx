@@ -1,7 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
+import { getPageMetadata } from "@/lib/seo";
 import PaketCard from "@/components/paket/PaketCard";
 import Link from "next/link";
 import { Search, SlidersHorizontal } from "lucide-react";
+
+export async function generateMetadata() {
+  return await getPageMetadata("/paket-wisata");
+}
 
 interface Props {
   searchParams: { wilayah?: string; durasi?: string; q?: string };
@@ -10,14 +15,19 @@ interface Props {
 export default async function PaketWisataPage({ searchParams }: Props) {
   const supabase = createClient();
 
-  const [{ data: wilayahs }, { data: pakets }] = await Promise.all([
+  const [{ data: wilayahs }, { data: pakets }, { data: settingsData }] = await Promise.all([
     supabase.from("wilayah").select("*").order("nama"),
     supabase
       .from("paket_wisata")
       .select("*, wilayah(*)")
       .eq("aktif", true)
       .order("created_at", { ascending: false }),
+    supabase.from("pengaturan_website").select("*"),
   ]);
+
+  const settings: Record<string, string> = {};
+  settingsData?.forEach((s) => (settings[s.kunci] = s.nilai));
+  const heroImage = settings.hero_image_paket || "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600";
 
   // Client-side filter will happen via params on refresh
   let filteredPakets = pakets || [];
@@ -43,17 +53,17 @@ export default async function PaketWisataPage({ searchParams }: Props) {
     <div>
       {/* Hero */}
       <div
-        className="relative h-56 bg-cover bg-center flex items-center justify-center"
+        className="relative h-80 md:h-[400px] bg-cover bg-center flex items-center justify-center pt-20"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600')",
         }}
       >
-        <div className="absolute inset-0 bg-blue-900/60" />
-        <div className="relative text-center text-white">
-          <h1 className="text-3xl font-bold">Paket Wisata</h1>
-          <p className="mt-2 text-blue-200">
-            Temukan destinasi wisata impian Anda bersama kami
+        <div className="absolute inset-0 bg-blue-900/70 backdrop-blur-[2px]" />
+        <div className="relative text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Paket Wisata</h1>
+          <p className="max-w-xl mx-auto text-blue-100 font-medium text-sm md:text-base">
+            Temukan destinasi wisata impian Anda bersama kami melalui pilihan paket tour eksklusif dan terpercaya.
           </p>
         </div>
       </div>

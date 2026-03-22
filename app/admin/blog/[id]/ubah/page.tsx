@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 export default function UbahBlogPage({ params }: { params: { id: string } }) {
   const [form, setForm] = useState<any>(null);
@@ -40,6 +41,9 @@ export default function UbahBlogPage({ params }: { params: { id: string } }) {
         author_nama: form.author_nama,
         tags,
         dipublikasikan: form.dipublikasikan,
+        meta_title: form.meta_title || null,
+        meta_description: form.meta_description || null,
+        meta_keywords: form.meta_keywords || null,
       })
       .eq("id", params.id);
 
@@ -108,6 +112,38 @@ export default function UbahBlogPage({ params }: { params: { id: string } }) {
               />
             </div>
           </div>
+
+          <div className="bg-white rounded-xl border p-5 space-y-4">
+            <h2 className="font-semibold text-gray-900">SEO (Optimasi Mesin Pencari)</h2>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Title</label>
+              <input
+                value={form.meta_title || ""}
+                onChange={(e) => setForm({ ...form, meta_title: e.target.value })}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Judul untuk SEO..."
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Description</label>
+              <textarea
+                value={form.meta_description || ""}
+                onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+                rows={3}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                placeholder="Deskripsi singkat untuk hasil pencarian Google..."
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Meta Keywords</label>
+              <input
+                value={form.meta_keywords || ""}
+                onChange={(e) => setForm({ ...form, meta_keywords: e.target.value })}
+                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="wisata bali, paket tour, nusa penida"
+              />
+            </div>
+          </div>
         </div>
         <div className="space-y-5">
           <div className="bg-white rounded-xl border p-5 space-y-4">
@@ -124,15 +160,12 @@ export default function UbahBlogPage({ params }: { params: { id: string } }) {
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-700">
-                URL Foto
-              </label>
-              <input
-                value={form.foto_utama || ""}
-                onChange={(e) =>
-                  setForm({ ...form, foto_utama: e.target.value })
-                }
-                className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              <ImageUpload
+                value={form.foto_utama}
+                onChange={(url) => setForm({ ...form, foto_utama: url })}
+                bucket="images"
+                folder="blog"
+                label="Foto Utama"
               />
             </div>
             <div>
