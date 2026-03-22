@@ -27,16 +27,17 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Protect dashboard
-  if (req.nextUrl.pathname.startsWith("/dashboard")) {
-    if (!session) {
-      return NextResponse.redirect(new URL("/masuk", req.url));
-    }
+  // Handle POST to GET redirection for payment pages (Doku compatibility)
+  if (req.method === "POST" && (
+      req.nextUrl.pathname.startsWith("/pembayaran/sukses") || 
+      req.nextUrl.pathname.startsWith("/pembayaran/gagal")
+  )) {
+    return NextResponse.redirect(new URL(req.nextUrl.pathname + req.nextUrl.search, req.url), 303);
   }
 
   return res;
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/dashboard/:path*"],
+  matcher: ["/admin/:path*", "/dashboard/:path*", "/pembayaran/sukses", "/pembayaran/gagal"],
 };

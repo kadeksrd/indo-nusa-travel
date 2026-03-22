@@ -4,11 +4,19 @@ import { Toaster } from "react-hot-toast";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = {
-  title: `${process.env.NEXT_PUBLIC_APP_NAME || "Indo Nusa Travel"} - Paket Wisata & Rental Mobil Terpercaya`,
-  description:
-    "Layanan paket wisata dan rental mobil terpercaya dengan pengalaman terbaik.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const supabase = createClient();
+  const { data: settings } = await supabase.from("pengaturan_website").select("*");
+  const getS = (k: string) => settings?.find((s) => s.kunci === k)?.nilai;
+  
+  const appName = getS("nama_website") || process.env.NEXT_PUBLIC_APP_NAME || "Indo Nusa Travel";
+  const tagline = getS("tagline") || "Paket Wisata & Rental Mobil Terpercaya";
+
+  return {
+    title: `${appName} - ${tagline}`,
+    description: getS("meta_description") || "Layanan paket wisata dan rental mobil terpercaya dengan pengalaman terbaik.",
+  };
+}
 
 export default async function RootLayout({
   children,

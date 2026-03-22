@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Indo Nusa Travel - Premium Travel & Rental Portal
 
-## Getting Started
+Indo Nusa Travel adalah platform pemesanan paket wisata dan rental mobil premium yang dibangun dengan Next.js 14, Tailwind CSS, dan Supabase.
 
-First, run the development server:
+## Fitur Utama
+
+- 🌟 **Desain Premium**: Antarmuka modern dengan glassmorphism dan animasi halus.
+- 📱 **Responsive**: Optimal untuk tampilan Mobile dan Desktop.
+- 🛍️ **E-Commerce**: Pemesanan paket wisata dan rental mobil dengan sistem slot.
+- 💳 **Pembayaran Otomatis**: Integrasi dengan Doku Payment Gateway.
+- 🛠️ **Admin Panel CMS**:
+  - Kelola Paket, Rental, & Blog.
+  - Moderasi Testimoni & Tambah Manual.
+  - Pengaturan SEO & Tracking (Pixel/GTM/GA4).
+  - Pengaturan Branding Website secara dinamis.
+- 👤 **User Dashboard**: Riwayat pesanan dan fitur ulasan (testimonial).
+
+## Persiapan Awal
+
+### 1. Prasyarat
+- Node.js 18+ 
+- Akun Supabase
+- Akun Doku (untuk sandbox/production)
+
+### 2. Kloning Project
+```bash
+git clone https://github.com/UsernameKamu/indo-nusa-travel.git
+cd indo-nusa-travel
+```
+
+### 3. Instalasi Dependency
+```bash
+npm install
+```
+
+### 4. Konfigurasi Environment
+Salin file `.env.example` menjadi `.env` dan isi dengan kredensial Anda:
+```bash
+cp .env.example .env
+```
+
+### 5. Setup Database (Supabase)
+1. Buat project baru di [Supabase](https://supabase.com).
+2. Buka **SQL Editor** di Dashboard Supabase.
+3. Jalankan isi file `lib/supabase/migrations/001_schema.sql` untuk membuat tabel dan kebijakan RLS.
+4. (Opsional) Jalankan `002.seed.sql` untuk data dummy awal.
+5. Pastikan menjalankan migrasi tambahan di folder `migrations` jika ada fitur baru (SEO, Slots, dll).
+
+## Menjalankan Project
+
+Jalankan server pengembangan:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy ke Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Platform yang direkomendasikan adalah **Vercel**:
+1. Hubungkan repository GitHub Anda ke Vercel.
+2. Tambahkan semua Environment Variables yang ada di `.env` ke settings Vercel.
+3. Vercel akan secara otomatis mendeteksi Next.js dan melakukan build & deploy.
 
-## Learn More
+## Lisensi
+Distributed under the MIT License. See `LICENSE` for more information.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Dibuat dengan ❤️ untuk industri pariwisata Indonesia.
