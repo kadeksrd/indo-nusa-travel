@@ -21,7 +21,12 @@ export default function HeroSection({ wilayahs, settings }: Props) {
   const heroSub = settings?.hero_subjudul || "Temukan pengalaman perjalanan tak terlupakan dengan paket wisata eksklusif dan layanan rental mobil premium di Bali.";
 
   const handleSearch = () => {
-    // ... (existing logic) ...
+    const params = new URLSearchParams();
+    if (wilayah) params.set("wilayah", wilayah);
+    if (durasi) params.set("durasi", durasi);
+
+    const queryString = params.toString();
+    router.push(`/paket-wisata${queryString ? `?${queryString}` : ""}`);
   };
 
   return (
@@ -44,14 +49,14 @@ export default function HeroSection({ wilayahs, settings }: Props) {
           </span>
           Jelajahi Surga Nusantara
         </div>
-        
+
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight">
           {heroTitle.split(" ").slice(0, -2).join(" ")} <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
             {heroTitle.split(" ").slice(-2).join(" ")}
           </span>
         </h1>
-        
+
         <p className="text-white/90 text-sm md:text-lg mb-8 md:mb-12 max-w-2xl mx-auto font-medium leading-relaxed px-4">
           {heroSub}
         </p>
@@ -64,7 +69,7 @@ export default function HeroSection({ wilayahs, settings }: Props) {
                 <Search className="w-5 h-5 text-blue-600 shrink-0" />
                 <div className="flex-1 text-left">
                   <label className="block text-[9px] uppercase font-black text-gray-400 tracking-wider">Cari Destinasi</label>
-                  <select 
+                  <select
                     value={wilayah}
                     onChange={(e) => setWilayah(e.target.value)}
                     className="w-full bg-transparent text-gray-900 font-bold text-sm focus:outline-none appearance-none cursor-pointer py-1"
@@ -78,7 +83,7 @@ export default function HeroSection({ wilayahs, settings }: Props) {
               <div className="flex-1 flex items-center gap-3 p-3 md:pl-6 border-b md:border-b-0 md:border-r border-gray-100 md:border-r-0">
                 <div className="flex-1 text-left">
                   <label className="block text-[9px] uppercase font-black text-gray-400 tracking-wider">Durasi Liburan</label>
-                  <select 
+                  <select
                     value={durasi}
                     onChange={(e) => setDurasi(e.target.value)}
                     className="w-full bg-transparent text-gray-900 font-bold text-sm focus:outline-none appearance-none cursor-pointer py-1"
@@ -91,7 +96,7 @@ export default function HeroSection({ wilayahs, settings }: Props) {
                 </div>
               </div>
 
-              <button 
+              <button
                 onClick={handleSearch}
                 className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-4 rounded-[1.2rem] md:rounded-[2rem] font-bold text-sm md:text-base transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-700/30 md:mt-0"
               >
@@ -104,9 +109,9 @@ export default function HeroSection({ wilayahs, settings }: Props) {
           <div className="mt-6 md:mt-8 flex flex-wrap justify-center items-center gap-4 md:gap-12 opacity-80">
             <div className="flex items-center gap-2">
               <div className="flex -space-x-2">
-                {[1,2,3].map(i => (
+                {[1, 2, 3].map(i => (
                   <div key={i} className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                    <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="user" className="w-full h-full object-cover" />
+                    <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="user" className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>

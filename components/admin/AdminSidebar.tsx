@@ -31,7 +31,7 @@ const navGroups = [
     title: "Manajemen Konten",
     items: [
       { href: "/admin/paket-wisatas", icon: Package, label: "Paket Wisata" },
-      { href: "/admin/rental-mobil", icon: Car, label: "Rental Mobil" },
+      { href: "/admin/rental-mobils", icon: Car, label: "Rental Mobil" },
       { href: "/admin/rekomendasi", icon: Star, label: "Rekomendasi" },
       { href: "/admin/testimoni", icon: MessageCircle, label: "Testimoni" },
       { href: "/admin/blog", icon: FileText, label: "Blog" },
@@ -95,11 +95,10 @@ export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
                   key={item.href}
                   href={item.href}
                   onClick={onClose}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
-                    active
-                      ? "bg-blue-700 text-white shadow-lg shadow-blue-700/20"
-                      : "text-gray-500 hover:bg-blue-50 hover:text-blue-700"
-                  }`}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${active
+                    ? "bg-blue-700 text-white shadow-lg shadow-blue-700/20"
+                    : "text-gray-500 hover:bg-blue-50 hover:text-blue-700"
+                    }`}
                 >
                   <item.icon className={`w-4 h-4 flex-shrink-0 ${active ? "animate-pulse" : ""}`} />
                   {item.label}
